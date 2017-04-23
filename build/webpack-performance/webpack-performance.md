@@ -25,7 +25,7 @@
         大文件:  app.js 为1.94M、pass.js为1.21M、vender.js为0.9M
 
 
-![webpack-old](./webpack-old.png)
+![webpack-old](https://github.com/justQing00/blog/tree/master/build/webpack-performance.png)
 
 
 #### 二、项目优化
@@ -37,7 +37,7 @@
 
 二次打包时间为：95070ms, 速度提升约31%
 
-![happy-cache](./happy-cache.png)
+![happy-cache](https://github.com/justQing00/blog/tree/master/build/webpack-performance/happy-cache.png)
 
 2、[CommonsChunkPlugin](https://webpack.js.org/plugins/commons-chunk-plugin/)
 
