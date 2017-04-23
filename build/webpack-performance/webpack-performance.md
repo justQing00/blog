@@ -119,6 +119,21 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 
 ![uglify](./uglify.png)
 
+##### Step 7 external与alias
+1、external 
+
+    简单来说就是将当前依赖声明为一个外部依赖,通过<script>标签引入.这些外部依赖就可以使用第三方加持,从而提升速度.
+    但这种方式脱离了整个 bundle.
+
+2、alias 
+
+    简单来说就是直接引用包里面的已处理文件.使得import 'react'就是 import 'react/dist/react.min.js'.
+    配合noParse 则会让 webpack 忽略对其进行文件的解析,直接进入最后的 bundle.
+
+我们使用的是第二种方法
+
+![alias](./alias.png)
+
 #### 三、代码优化
 
 #### 四、gzip优化
