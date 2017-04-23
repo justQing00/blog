@@ -70,3 +70,22 @@ Step 2结束之后，我们发现每次生成的vender.js的hash码都不一样�
 业务代码改动后代码信息
 
 ![manifest-after](./manifest-after.png)
+
+如果想让替代webpack自带的manifest，可以试一下这个 [chunk-manifest-webpack-plugin](https://github.com/soundcloud/chunk-manifest-webpack-plugin)
+
+##### Step 4、[Yarn](https://webpack.js.org/guides/code-splitting-libraries/#manifest-file) install优化
+yarn，在使用上和npm没有什么明显区别, 初始目的是解决的npm安装过程中包一致的问题
+
+和npm相比特别之处在于
+
+1、默认生成的 yarn.lock 文件 用于保证包一致
+
+2、并行安装， 并有缓存，因而二次安装速度快，并能够离线安装
+
+3、简洁的输出，对外的api
+
+有一个经验公式
+
+T总 = T下载依赖 + Twebpack
+
+Twebpack = Tloaders + Tplugins
