@@ -136,4 +136,16 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 
 #### 三、代码优化
 
+##### Step 1、避免为了小功能而引大lib
+
+1、lodash
+
+我们可以使用 [lodash-cli](https://lodash.com/custom-builds)生成我们需要的方法,如果为了生成方便,可以使用脚本扫码项目所有文件,自动生成.
+
+![lodash](./lodash.png)
+
+2、moment
+
+在需要项目中, 我们可能仅仅会用到format等较为简单的方法,而引入了整个moment,可以尝试一下[fecha](https://github.com/taylorhakes/fecha)
+
 #### 四、gzip优化
