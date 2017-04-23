@@ -146,6 +146,11 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 
 2、moment
 
-在需要项目中, 我们可能仅仅会用到format等较为简单的方法,而引入了整个moment,可以尝试一下[fecha](https://github.com/taylorhakes/fecha)
+在项目中, 我们可能仅仅会用到format等较为简单的方法,而引入了整个moment,可以尝试一下[fecha](https://github.com/taylorhakes/fecha)
+
+##### Step 2、无效代码的引入
+借助 webpack-visualizer-plugin
+
+##### Step 3、require.ensure
 
 #### 四、gzip优化
