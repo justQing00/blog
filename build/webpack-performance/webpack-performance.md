@@ -100,7 +100,12 @@ yarn二次安装耗时较长,耗时16.6s, 速度提升约88%
 
 ![yarn-second](./yarn-second.png)
 
-##### Step 5
+##### Step 5 [ignore-loader](https://github.com/cherrry/ignore-loader)
+在我们引用其他人的公用库时，很多文件本身并没有使用到，我们需要忽略掉某些文件或者文件夹的打包。从而减少其他依赖、构建文件大小，以及构建速度。
+
+举例，过滤掉了xterm、teminal等依赖，并忽略map文件，减少warning。
+
+![ignore](./ignore.png)
 
 #### 三、代码优化
 
