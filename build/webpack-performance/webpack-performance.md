@@ -25,7 +25,7 @@
         大文件:  app.js 为1.94M、pass.js为1.21M、vender.js为0.9M
 
 
-![webpack-old](./webpack-performance.png)
+![webpack-old](./webpack-old.png)
 
 
 #### 二、项目优化
