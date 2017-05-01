@@ -16,7 +16,7 @@
 
 ##### 3、项目未优化时
 
-    大小: 3.4M
+    大小: 7.6M
 
     打包情况:
 
@@ -61,7 +61,7 @@ webpack 自带插件, 通过抽取公用代码,减少公用文件的大小.
 
 Step 2结束之后,我们发现每次生成的vender.js的hash码都不一样,既然作为公用的文件,那么每次生成都应该一样,这样项目再次发布时,浏览器就不用重复性的下载新文件了
 
-    PS:官网原文
+ *  PS:官网原文
 
     But, if we change application code and run webpack again, we see that the hash for the vendor file changes. Even though we achieved separate bundles for vendor and main bundles, we see that the vendor bundle changes when the application code changes. This means that we still don't reap the benefits of browser caching because the hash for vendor file changes on every build and the browser will have to reload the file.
 
@@ -151,6 +151,10 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 ##### Step 2、无效代码的引入
 借助 webpack-visualizer-plugin
 
-##### Step 3、require.ensure
+##### Step 3、[Router Code Splitting](https://github.com/ReactTraining/react-router/blob/v3/docs/guides/DynamicRouting.md)
+
+*   官网原文
+
+    It's important that changes deep down in the application don't require changes all the way up top as well. For example, adding a route to the photo viewer should not affect the size of the initial JavaScript bundle the user downloads. Neither should it cause merge conflicts as multiple teams have their fingers in the same, big route configuration file.
 
 #### 四、gzip优化
