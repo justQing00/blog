@@ -151,9 +151,14 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 ##### Step 2、无效代码的引入
 借助 webpack-visualizer-plugin
 
-##### Step 3、[Router Code Splitting](https://github.com/ReactTraining/react-router/blob/v3/docs/guides/DynamicRouting.md)
+##### Step 3、[Router Code Splitting](https://reacttraining.com/react-router/web/guides/code-splitting)
+当所有的文件通过入口文件引入时，无疑会导致生成的app.js等文件比较庞大,这个时候我们可以使用 React-Router提供的require.ensure,访问哪个页面就引入这个页面的相关组件,从而减少下载文件的大小. (这里我们升级了一下 react-router到4.1)
 
-*   官网原文
+*   [v4 官网原文](https://reacttraining.com/react-router/web/guides/code-splitting)
+
+    One great feature of the web is that we don’t have to make our visitors download the entire app before they can use it. You can think of code splitting as incrementally downloading the app. While there are other tools for the job, we’ll use Webpack and the bundle loader in this guide..
+
+*   [v3 官网原文](https://github.com/ReactTraining/react-router/blob/v3/docs/guides/DynamicRouting.md)
 
     It's important that changes deep down in the application don't require changes all the way up top as well. For example, adding a route to the photo viewer should not affect the size of the initial JavaScript bundle the user downloads. Neither should it cause merge conflicts as multiple teams have their fingers in the same, big route configuration file.
 
