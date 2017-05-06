@@ -69,7 +69,7 @@ Step 2结束之后,我们发现每次生成的vender.js的hash码都不一样,�
 
 ![manifest-before](./manifest-before.png)
 
-业务代码改动后代码信息
+业务代码改动后代码信息,可以看到vender.js未发生变更
 
 ![manifest-after](./manifest-after.png)
 
@@ -151,19 +151,88 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 ##### Step 2、无效代码的引入
 借助 webpack-visualizer-plugin
 
-##### Step 3、[Router Code Splitting](https://reacttraining.com/react-router/web/guides/code-splitting)
-当所有的文件通过入口文件引入时，无疑会导致生成的app.js等文件比较庞大,这个时候我们可以使用 React-Router官网建议的代码分割,从而减少下载文件的大小. (这里我们升级了一下 react-router到4.1)
+##### Step 3、[Code Splitting](https://reacttraining.com/react-router/web/guides/code-splitting)
+当所有的文件通过入口文件引入时，无疑会导致生成的app.js等文件比较庞大,这个时候我们可以使用 React-Router官网建议的代码分割,从而减少下载文件的大小. (这里我们[升级](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/migrating.md)了一下 react-router到4.1)
 
 *   [v4 官网原文](https://reacttraining.com/react-router/web/guides/code-splitting)
 
-    直接封装组件,当组件被使用时动态加载相关文件.
+    使用bundle-loader.
 
     One great feature of the web is that we don’t have to make our visitors download the entire app before they can use it. You can think of code splitting as incrementally downloading the app. While there are other tools for the job, we’ll use Webpack and the bundle loader in this guide..
 
 *   [v3 官网原文](https://github.com/ReactTraining/react-router/blob/v3/docs/guides/DynamicRouting.md)
 
-    访问哪个页面就引入这个页面的相关文件.
+    使用require.ensure.
 
     It's important that changes deep down in the application don't require changes all the way up top as well. For example, adding a route to the photo viewer should not affect the size of the initial JavaScript bundle the user downloads. Neither should it cause merge conflicts as multiple teams have their fingers in the same, big route configuration file.
+
+```js
+
+    // router-one.js 大业务组件的routes写法
+
+    import Bundle from './bundle';
+    import OneComp from 'bundle-loader?lazy!./one';
+
+    const routes = [
+      {
+         path: '/demo/one',
+         component: props => <Bundle load={OneComp} {...props}></Bundle>,
+      },
+    ];
+
+    export default routes;
+
+
+    // router.js
+    import getOneRouter from 'router-one';
+
+    ...
+    initRoutes() {
+      this.routes = [
+        { path: '/',
+          component: LoginPage,
+          exact: true,
+        },
+        { path: '/console',
+          component: ({ routes }) => (
+            <PageContainer>
+              {routes.map((route, i) => (
+                <RouteWithSubRoutes key={i} {...route}/>
+              ))}
+            </PageContainer>
+          ),
+          routes: [
+            ...getOneRouter,
+          ],
+        },
+      ];
+    }
+
+    ...
+    render() {
+      return (
+        <Router history={browserHistory}>
+          <Switch>
+            {this.routes.map((route, i) => (
+              <RouteWithSubRoutes key={i} {...route}/>
+            ))}
+          </Switch>
+        </Router>
+      );
+    }
+
+    ...
+    const RouteWithSubRoutes = (route) => (
+      <Route path={route.path} render={props => (
+        // pass the sub-routes down to keep nesting
+        <route.component {...props} routes={route.routes}/>
+      )}
+      />
+    );
+```
+
+ 到这一步时,每一次路由访问只会访问对应的组件。(稍微优化一下, 给react-router-dom 建立alias和noParse, 并放在第三方专用vender中).但随着优化和项目进行, 项目本身大小已经由7.6M扩张到 10M迎来了第三个版本的开发.这时我们再来看一下打包情况.
+ app.js没有明显的增加, 打包时间没有明显变化, 不过由于引入了新插件,vender.js发生了变化.
+ ![code-split](./code-split.png)
 
 #### 四、gzip优化
