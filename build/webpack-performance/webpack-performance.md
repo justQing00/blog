@@ -256,7 +256,7 @@ antd由于是基础的第三方组件,不能动, 而moment是由antd的date-pick
  ![paas.js.gif](./paas.js.gif)
 
 2、分析一下paas.js,超过30k的第三方文件
-* 可以看到lodash占了160k
+* lodash占了160k
 * antd占了34k
 * holderjs占了47k
 
@@ -272,6 +272,36 @@ holderjs属于公用库中的组件引入的,未曾使用,使用ignore屏蔽即�
 
  ![vistual-paas](./vistual-paas.png)
 
-此时paas.js由394k降到了288k, 再次减少27%,
+此时paas.js由394k降到了288k, 再次减少27%
 
+3、最后分析一下vender.js, 超过100k的第三库方文件
+* echarts占了746k
+* react-dom占了205k, 用于渲染根节点，基本不能动
+* moment占了148k, 多数页面都被使用，移动价值不大
+
+echarts 在已开始被打包进入了vender.而分析项目代码，我们从引入的公用库`common` 里面 `import { Echarts } from 'common' `, 而 `Echarts`中 `import echarts from 'echarts'`,使得在第一时间就被引入,哪怕没有访问到相关页面.
+从而造成vender的庞大, 以及 echarts在任何页面都被引入.
+
+解决方法首先将echarts从vender中剔除, 在使用`require.ensure`进行封装, 由此实现了代码分割和使用时,echars按需加载.
+
+```js
+  ...
+  componentDidMount() {
+    require.ensure(['echarts', 'element-resize-event'], (require) => {
+      this.echarts = require('echarts');
+      const elementResizeEvent = require('element-resize-event');
+      const echartObj = this.renderEchartDom();
+
+      ....
+
+      elementResizeEvent(this.refs.echartsDom, () => {
+        echartObj.resize();
+      });
+    });
+  }
+```
+
+此时vender.js由1.46M降到了826k, 再次减少44%
+
+ ![vistual-vender](./vistual-vender.png)
 #### 四、gzip优化
