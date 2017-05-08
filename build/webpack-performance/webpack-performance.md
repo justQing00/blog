@@ -240,7 +240,7 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 
  ![app.js.gif](./app.js.gif)
 
-首先分析一下app.js,超过30k的第三方文件
+1、首先分析一下app.js,超过30k的第三方文件
 * 可以看到moment占了183k
 * antd占了68k,rc-calendar占了49k, 这个动不了
 * lodash只是部分文件, 占了47k
@@ -255,7 +255,7 @@ antd由于是基础的第三方组件,不能动, 而moment是由antd的date-pick
 此时app.js由746k降到了360k, 再次减少52%, 但 vender.js由1M增加到了1.46M, 此时我们来看一下公用库paas.js有394k
  ![paas.js.gif](./paas.js.gif)
 
-分析一下paas.js,超过30k的第三方文件
+2、分析一下paas.js,超过30k的第三方文件
 * 可以看到lodash占了160k
 * antd占了34k
 * holderjs占了47k
