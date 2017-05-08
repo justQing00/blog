@@ -248,6 +248,10 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 * react-draggable占了35k
 * react-grid-layout占了27k
 * ...
-antd由于是基础组件,不能动, 而moment是由antd的date-picker组件中引入的, 把他们都移到vender中,并建立alias
+antd由于是基础的第三方组件,不能动, 而moment是由antd的date-picker组件中引入的, 把他们都移到vender中,并建立alias
+
+ ![vistual-app](./vistual-app.png)
+
+此时app.js由746k降到了360k,但 vender.js由1M增加到了1.46M
 
 #### 四、gzip优化
