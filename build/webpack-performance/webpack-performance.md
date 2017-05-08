@@ -252,6 +252,26 @@ antd由于是基础的第三方组件,不能动, 而moment是由antd的date-pick
 
  ![vistual-app](./vistual-app.png)
 
-此时app.js由746k降到了360k,但 vender.js由1M增加到了1.46M
+此时app.js由746k降到了360k, 再次减少52%, 但 vender.js由1M增加到了1.46M, 此时我们来看一下公用库paas.js有394k
+ ![paas.js.gif](./paas.js.gif)
+
+分析一下paas.js,超过30k的第三方文件
+* 可以看到lodash占了160k
+* antd占了34k
+* holderjs占了47k
+
+为生成的lodash.min建立alias, 然后使用webpack.ProvidePlugin配置 lodash 为 alias中的 _
+```js
+  new webpack.ProvidePlugin({
+    _: '_',
+    // 或lodash: '_',
+  }),
+
+```
+holderjs属于公用库中的组件引入的,未曾使用,使用ignore屏蔽即可
+
+ ![vistual-paas](./vistual-paas.png)
+
+此时paas.js由394k降到了288k, 再次减少27%,
 
 #### 四、gzip优化
