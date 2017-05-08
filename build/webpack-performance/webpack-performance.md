@@ -232,7 +232,22 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 ```
 
  到这一步时,每一次路由访问只会访问对应的组件。(稍微优化一下, 给react-router-dom 建立alias和noParse, 并放在第三方专用vender中).但随着优化和项目进行, 项目本身大小已经由7.6M扩张到 10M迎来了第三个版本的开发.这时我们再来看一下打包情况.
- app.js没有明显的增加, 打包时间没有明显变化, 不过由于引入了新插件,vender.js发生了变化.
+ app.js没有明显的增加, 打包时间没有明显变化, 不过由于引入了新插件,vender.js变大了.
  ![code-split](./code-split.png)
+
+##### Step 4、代码分析[webpack-visualizer-plugin](https://github.com/chrisbateman/webpack-visualizer)
+项目变庞大之后,使用了codesplit处理,但压缩后的文件，依然比较大，这个时候我们需要借助一下[webpack-visualizer-plugin](https://github.com/chrisbateman/webpack-visualizer)进行代码分析.
+
+ ![app.js.gif](./app.js.gif)
+
+首先分析一下app.js,超过30k的第三方文件
+* 可以看到moment占了183k
+* antd占了68k,rc-calendar占了49k, 这个动不了
+* lodash只是部分文件, 占了47k
+* socketjs-client占了39k
+* react-draggable占了35k
+* react-grid-layout占了27k
+* ...
+antd由于是基础组件,不能动, 而moment是由antd的date-picker组件中引入的, 把他们都移到vender中,并建立alias
 
 #### 四、gzip优化
