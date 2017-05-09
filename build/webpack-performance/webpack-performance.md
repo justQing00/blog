@@ -156,7 +156,7 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 
 *   [v4 官网原文](https://reacttraining.com/react-router/web/guides/code-splitting)
 
-    使用bundle-loader.
+    使用bundle-loader. 以官网的demo简易封装了[bundle.jsx](./bundle.jsx),以方便router-one.js使用
 
     One great feature of the web is that we don’t have to make our visitors download the entire app before they can use it. You can think of code splitting as incrementally downloading the app. While there are other tools for the job, we’ll use Webpack and the bundle loader in this guide..
 
