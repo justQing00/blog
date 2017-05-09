@@ -335,7 +335,10 @@ echarts 在已开始被打包进入了vender.而分析项目代码，我们从�
   };
 
   // webpack.config.js
-
+  new CopyWebpackPlugin([
+    { from: './app/images', to: 'images' },
+    { context: './dll/', from: '**/*', to: '' },
+  ]),
   new webpack.DllReferencePlugin({
     context: __dirname,
     manifest: require("../dll/vendor-manifest.json"), // eslint-disable-line
