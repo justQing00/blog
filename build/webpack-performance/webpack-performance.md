@@ -302,8 +302,50 @@ echarts 在已开始被打包进入了vender.而分析项目代码，我们从�
 
 此时vender.js由1.46M降到了826k, 再次减少44%
 
- ![vistual-vender](./vistual-vender.png)
+![vistual-vender](./vistual-vender.png)
 
 #### 四、dll优化
+在每一次打包的过程中, 我们建立的第三方库入口文件vender是不经常变动的,因而第三方库往往不需要经常打包更新.这个时候我们可通过[dll-plugin](https://webpack.js.org/plugins/dll-plugin/#components/sidebar/sidebar.jsx)给第三方库进行打包.
+
+优化vender.js
+
+```js
+  // webpack.dll.config
+  ...
+  module.exports = () => {
+    return {
+      name: 'vendor',
+      entry: {
+        vendor,
+      },
+      output: {
+        path: path.join(__dirname, 'dll'),
+        filename: '[name]_[hash].js',
+        library: '[name]_[hash]',
+      },
+      ...
+      plugins: [
+        new webpack.DllPlugin({
+          name: '[name]_[hash]',
+          path: path.join(__dirname, 'dll', '[name]-manifest.json'),
+          context: __dirname,
+        }),
+      ],
+    };
+  };
+
+  // webpack.config.js
+
+  new webpack.DllReferencePlugin({
+    context: __dirname,
+    manifest: require("../dll/vendor-manifest.json"), // eslint-disable-line
+  })
+
+  // html 手动引入生成的文件
+  <script type="text/javascript" src="/vendor_12830f2128e6352f6cf8.js"></script>
+
+```
+![dll-vender](./dll-vender.png)
+打包速度由76s降到了66s,和先前的最快的打包速度基本持平.
 
 #### 五、gzip优化
