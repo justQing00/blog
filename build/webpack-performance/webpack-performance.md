@@ -148,10 +148,7 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
 
 在项目中, 我们可能仅仅会用到format等较为简单的方法,而引入了整个moment,可以尝试一下[fecha](https://github.com/taylorhakes/fecha)
 
-##### Step 2、无效代码的引入
-借助 webpack-visualizer-plugin
-
-##### Step 3、[Code Splitting](https://reacttraining.com/react-router/web/guides/code-splitting)
+##### Step 2、[Code Splitting](https://reacttraining.com/react-router/web/guides/code-splitting)
 当所有的文件通过入口文件引入时，无疑会导致生成的app.js等文件比较庞大,这个时候我们可以使用 React-Router官网建议的代码分割,从而减少下载文件的大小. (这里我们[升级](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/migrating.md)了一下 react-router到4.1)
 
 *   [v4 官网原文](https://reacttraining.com/react-router/web/guides/code-splitting)
@@ -235,7 +232,7 @@ uglifyJS凭借基于node开发,压缩比例高,使用方便等诸多优点已经
  app.js没有明显的增加, 打包时间没有明显变化, 不过由于引入了新插件,vender.js变大了.
  ![code-split](./code-split.png)
 
-##### Step 4、代码分析[webpack-visualizer-plugin](https://github.com/chrisbateman/webpack-visualizer)
+##### Step 3、代码分析[webpack-visualizer-plugin](https://github.com/chrisbateman/webpack-visualizer)
 项目变庞大之后,使用了codesplit处理,但压缩后的文件，依然比较大，这个时候我们需要借助一下[webpack-visualizer-plugin](https://github.com/chrisbateman/webpack-visualizer)进行代码分析.
 
  ![app.js.gif](./app.js.gif)
