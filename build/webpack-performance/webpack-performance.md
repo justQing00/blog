@@ -355,12 +355,12 @@ dll的打包过程中我们可以继续使用[webpack-uglify](https://webpack.js
 ![paas-css](./paas-css.png)
 
 我们继续优化, 可以看到paas.css、pass.js将antd的样式以及部分组件等重新打包生成了,所以我们可以不再建立paas这个`entry`.
-优化后 app.js + pass.js + app.css + pass.css = 888k, 减少约 84k
+优化后 app.js app.css = 888k, 减少约 84k
 ![no-paas-css](./no-paas-css.png)
 
 
 由此,我们完成了一系列的打包性能、时间、大小的优化,给页面性能的提升十分明显.
-* 我们可以继续分析变大的两个chunk文件.
+* 我们可以继续分析变大的chunk文件.
 * 我们写一个类似[babel-plugin-import](https://github.com/ant-design/babel-plugin-import)的webpack插件打包我们的公用代码.
 * 当然我们可以对业务公用库paas进行es5化,并进行更多细粒度的拆分,并提供`*.min.js`.
 * 当然我们也可以继续对业务公用库paas进行优化,因为我们只是使用了其中的一小部分功能却引入了总计高达几百k的paas.js、paas.css和他们的插件,这一步将会初步预计将会再次减少500k左右的压缩代码,时间估计将再次减少数十秒.
