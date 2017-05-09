@@ -349,6 +349,16 @@ echarts 在已开始被打包进入了vender.而分析项目代码，我们从�
 
 dll的打包过程中我们可以继续使用[webpack-uglify](https://webpack.js.org/plugins/uglifyjs-webpack-plugin/#components/sidebar/sidebar.jsx)压缩生成的vender.js去除里面的注释、空格等等.
 
+#### 五、其他优化
+###### Step 1. entry优化
+此时 app.js + pass.js + app.css + pass.css = 972k
+![paas-css](./paas-css.png)
+
+我们继续优化, 可以看到paas.css、pass.js将antd的样式以及部分组件等重新打包生成了,所以我们可以不再建立paas这个`entry`.
+优化后 app.js + pass.js + app.css + pass.css = 888k, 减少约 84k
+![no-paas-css](./no-paas-css.png)
+
+
 由此,我们完成了一系列的打包性能、时间、大小的优化,给页面性能的提升十分明显.
 * 我们可以继续分析变大的两个chunk文件.
 * 我们写一个类似[babel-plugin-import](https://github.com/ant-design/babel-plugin-import)的webpack插件打包我们的公用代码.
